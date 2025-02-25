@@ -194,9 +194,9 @@ function isDateInPeriod(date, period) {
  */
 function formatDate(date) {
   const d = new Date(date);
-  let hours = d.getUTCHours();
-  const mins = d.getUTCMinutes().toString().padStart(2, '00');
-  const secs = d.getUTCSeconds().toString().padStart(2, '00');
+  let hours = d.getHours();
+  const mins = d.getMinutes().toString().padStart(2, '00');
+  const secs = d.getSeconds().toString().padStart(2, '00');
   let ampm = 'AM';
   if (hours > 0 && hours < 12) {
     ampm = 'AM';
@@ -204,7 +204,7 @@ function formatDate(date) {
     if (hours > 12) hours -= 12;
     ampm = 'PM';
   }
-  return `${d.getUTCMonth() + 1}/${d.getUTCDate()}/${d.getUTCFullYear()}, ${hours}:${mins}:${secs} ${ampm}`;
+  return `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}, ${hours}:${mins}:${secs} ${ampm}`;
 }
 
 /**
@@ -221,12 +221,12 @@ function formatDate(date) {
  */
 function getCountWeekendsInMonth(month, year) {
   let counter = 0;
-  const date = new Date(year, month - 1, 2);
+  const date = new Date(year, month - 1, 1);
   const tempDate = new Date(date);
   do {
-    if (tempDate.getUTCDay() === 0 || tempDate.getUTCDay() === 6) counter += 1;
-    tempDate.setUTCDate(tempDate.getUTCDate() + 1);
-  } while (tempDate.getUTCMonth() === date.getUTCMonth());
+    if (tempDate.getDay() === 0 || tempDate.getDay() === 6) counter += 1;
+    tempDate.setDate(tempDate.getDate() + 1);
+  } while (tempDate.getMonth() === date.getMonth());
   return counter;
 }
 
